@@ -17,12 +17,12 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.serviceslimit.limit.master.OverviewActivity;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    private TextView mStatusTextView;
 
     private static final String TAG = "SignInActivity";
 
@@ -32,11 +32,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_in);
         getSupportActionBar().hide();
 
-        mStatusTextView = findViewById(R.id.status);
+        //mStatusTextView = findViewById(R.id.status);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.disconnect_button).setOnClickListener(this);
+        //findViewById(R.id.sign_out_button).setOnClickListener(this);
+        //findViewById(R.id.disconnect_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -79,6 +79,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+            Intent myIntent = new Intent(this, OverviewActivity.class);
+            startActivity(myIntent);
         }
     }
     // [END onActivityResult]
@@ -132,12 +134,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
-            mStatusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName()));
+            //mStatusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName()));
 
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
            // findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
-            mStatusTextView.setText(R.string.signed_out);
+            //mStatusTextView.setText(R.string.signed_out);
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
@@ -151,12 +153,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 Log.i("STATE", "clicked!");
                 signIn();
                 break;
-            case R.id.sign_out_button:
+            /*case R.id.sign_out_button:
                 signOut();
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
-                break;
+                break;*/
         }
     }
 }
