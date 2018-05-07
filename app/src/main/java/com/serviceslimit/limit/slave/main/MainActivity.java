@@ -1,4 +1,4 @@
-package com.serviceslimit.limit;
+package com.serviceslimit.limit.slave.main;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -9,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.serviceslimit.limit.R;
 
 import java.util.ArrayList;
 import java.util.List;

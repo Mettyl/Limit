@@ -1,4 +1,4 @@
-package com.serviceslimit.limit;
+package com.serviceslimit.limit.slave.main;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.serviceslimit.limit.R;
 
 import java.util.List;
 
