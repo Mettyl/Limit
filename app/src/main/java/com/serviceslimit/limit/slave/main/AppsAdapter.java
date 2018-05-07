@@ -1,14 +1,14 @@
 package com.serviceslimit.limit.slave.main;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.serviceslimit.limit.R;
@@ -18,13 +18,11 @@ import java.util.List;
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
 
     private Context context;
-    private PackageManager packageManager;
-    private List<ApplicationInfo> infoList;
+    private List<InstalledAppData> appDataList;
 
-    public AppsAdapter(Context context, List<ApplicationInfo> infoList,PackageManager packageManager){
+    public AppsAdapter(Context context, List<InstalledAppData> appList){
         this.context = context;
-        this.infoList = infoList;
-        this.packageManager = packageManager;
+        this.appDataList = appList;
     }
 
     @NonNull
@@ -37,17 +35,25 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AppHolder holder, int position) {
 
-        ApplicationInfo info = infoList.get(position);
+        final InstalledAppData appData = appDataList.get(position);
 
-        holder.icon.setImageDrawable(info.loadIcon(packageManager));
-        holder.name.setText((String) packageManager.getApplicationLabel(info));
+        holder.name.setText(appData.getName());
+        holder.icon.setImageDrawable(appData.getIcon());
+        holder.aSwitch.setChecked(appData.isBlocked());
+
+        holder.aSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appData.setBlocked(!appData.isBlocked());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return infoList.size();
+        return appDataList.size();
     }
 
 
@@ -55,11 +61,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
 
         private TextView name;
         private ImageView icon;
+        private Switch aSwitch;
 
         public AppHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.app_recycler_name_tv);
             icon = itemView.findViewById(R.id.app_recycler_icon_iv);
+            aSwitch = itemView.findViewById(R.id.app_recycler_switch);
         }
     }
 }
