@@ -5,12 +5,22 @@ import android.graphics.drawable.Drawable;
 public class InstalledAppData {
 
     private String name;
+    private String packageName;
     private Drawable icon;
     private boolean blocked;
 
-    public InstalledAppData(String name, Drawable icon) {
+    public InstalledAppData(String name, String packageName, Drawable icon) {
         this.name = name;
+        this.packageName = packageName;
         this.icon = icon;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String getName() {

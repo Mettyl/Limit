@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.serviceslimit.limit.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
@@ -41,12 +42,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
 
         holder.name.setText(appData.getName());
         holder.icon.setImageDrawable(appData.getIcon());
+        holder.aSwitch.setOnCheckedChangeListener(null);
         holder.aSwitch.setChecked(appData.isBlocked());
 
-        holder.aSwitch.setOnClickListener(new View.OnClickListener() {
+        holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                appData.setBlocked(!appData.isBlocked());
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                appData.setBlocked(b);
             }
         });
     }
@@ -54,6 +56,17 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppHolder> {
     @Override
     public int getItemCount() {
         return appDataList.size();
+    }
+
+    public ArrayList<String> getCheckedPackages() {
+        ArrayList<String> list = new ArrayList<>();
+        for (InstalledAppData a : appDataList) {
+            if (a.isBlocked()) {
+                list.add(a.getPackageName());
+            }
+        }
+
+        return list;
     }
 
 
