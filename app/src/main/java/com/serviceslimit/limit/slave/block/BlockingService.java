@@ -8,6 +8,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.util.Log;
 import com.serviceslimit.limit.R;
 import com.serviceslimit.limit.slave.main.MainActivity;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -35,9 +38,11 @@ public class BlockingService extends Service {
 
             String s = getForegroundApp();
 
-            for (String p : packages) {
-                if (s.equals(p)) {
-                    showBlockingScreen();
+            if (packages != null) {
+                for (String p : packages) {
+                    if (s.equals(p)) {
+                        showBlockingScreen();
+                    }
                 }
             }
             if (started) {
@@ -46,9 +51,7 @@ public class BlockingService extends Service {
         }
     };
 
-
     public BlockingService() {
-
     }
 
     @Override
@@ -58,6 +61,7 @@ public class BlockingService extends Service {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+        Log.d(TAG, "onStartCommand: Service started.");
 
         if (intent != null) {
             packages = intent.getStringArrayListExtra("info");
@@ -82,7 +86,7 @@ public class BlockingService extends Service {
         startForeground(1, notification);
 
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     /**
@@ -151,6 +155,7 @@ public class BlockingService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy: Service destroyed.");
         stop();
         super.onDestroy();
     }
@@ -161,4 +166,45 @@ public class BlockingService extends Service {
         return null;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged");
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onLowMemory() {
+        Log.d(TAG, "onLowMemory");
+        super.onLowMemory();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        Log.d(TAG, "onTrimMemory");
+        super.onTrimMemory(level);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d(TAG, "onUnbind");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+        Log.d(TAG, "onRebind");
+        super.onRebind(intent);
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Log.d(TAG, "onTaskRemoved");
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
+        Log.d(TAG, "dump");
+        super.dump(fd, writer, args);
+    }
 }
