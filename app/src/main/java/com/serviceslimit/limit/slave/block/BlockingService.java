@@ -152,59 +152,11 @@ public class BlockingService extends Service {
         return currentApp;
     }
 
-
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "onDestroy: Service destroyed.");
-        stop();
-        super.onDestroy();
-    }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged");
-        super.onConfigurationChanged(newConfig);
-    }
 
-    @Override
-    public void onLowMemory() {
-        Log.d(TAG, "onLowMemory");
-        super.onLowMemory();
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        Log.d(TAG, "onTrimMemory");
-        super.onTrimMemory(level);
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        Log.d(TAG, "onUnbind");
-        return super.onUnbind(intent);
-    }
-
-    @Override
-    public void onRebind(Intent intent) {
-        Log.d(TAG, "onRebind");
-        super.onRebind(intent);
-    }
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        Log.d(TAG, "onTaskRemoved");
-        super.onTaskRemoved(rootIntent);
-    }
-
-    @Override
-    protected void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
-        Log.d(TAG, "dump");
-        super.dump(fd, writer, args);
-    }
 }
